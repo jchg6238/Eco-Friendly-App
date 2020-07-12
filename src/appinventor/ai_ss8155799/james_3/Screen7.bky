@@ -1,0 +1,13 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="component_set_get" id="O+GlYxJn4TE*0Oe|.=/E" x="-334" y="-65">
+    <mutation component_type="WebViewer" set_or_get="set" property_name="HomeUrl" is_generic="false" instance_name="網路瀏覽器1"></mutation>
+    <field name="COMPONENT_SELECTOR">網路瀏覽器1</field>
+    <field name="PROP">HomeUrl</field>
+    <value name="VALUE">
+      <block type="text" id="cU|@M^e0Mrh3K[~,,;#X">
+        <field name="TEXT">https://www.google.com/maps/embed/v1/place?key=AIzaSyDKuADMMGfyXp24XctQqBHJkgk1uP0TlRU&amp;q=高雄市政府</field>
+      </block>
+    </value>
+  </block>
+  <yacodeblocks ya-version="196" language-version="27"></yacodeblocks>
+</xml>

@@ -1,0 +1,775 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <block type="global_declaration" id="1" inline="false" x="0" y="0">
+    <field name="NAME">weburl</field>
+    <value name="VALUE">
+      <block type="text" id="YpbEgHVijTL;iQNxQ|}8">
+        <field name="TEXT">http://opendata.epa.gov.tw/ws/Data/INEWS/?$orderby=NewsDate%20desc&amp;$skip=0&amp;$top=1000&amp;format=json</field>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" id="3" inline="false" x="0" y="53">
+    <field name="NAME">alist</field>
+    <value name="VALUE">
+      <block type="lists_create_with" id="4">
+        <mutation items="0"></mutation>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" id="W[sC-PXqu2fmVD:Gbw`C" inline="false" x="0" y="106">
+    <field name="NAME">selectlist</field>
+    <value name="VALUE">
+      <block type="lists_create_with" id="wl#f?pi6i$^2/Kq3IeMC">
+        <mutation items="0"></mutation>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" id="7" inline="false" x="0" y="159">
+    <field name="NAME">listpickerstr</field>
+    <value name="VALUE">
+      <block type="text" id="8">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" id="11" inline="false" x="0" y="212">
+    <field name="NAME">statusaqi</field>
+    <value name="VALUE">
+      <block type="text" id="12">
+        <field name="TEXT"></field>
+      </block>
+    </value>
+  </block>
+  <block type="global_declaration" id="9" inline="false" x="0" y="265">
+    <field name="NAME">statuspm25</field>
+    <value name="VALUE">
+      <block type="math_number" id="10">
+        <field name="NUM">0</field>
+      </block>
+    </value>
+  </block>
+  <block type="component_event" id="21" x="0" y="318">
+    <mutation component_type="Web" is_generic="false" instance_name="網路1" event_name="GotText"></mutation>
+    <field name="COMPONENT_SELECTOR">網路1</field>
+    <statement name="DO">
+      <block type="controls_if" id="22" inline="false">
+        <value name="IF0">
+          <block type="logic_compare" id="23">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="lexical_variable_get" id="24">
+                <mutation>
+                  <eventparam name="responseCode"></eventparam>
+                </mutation>
+                <field name="VAR">responseCode</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="25">
+                <field name="NUM">200</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="lexical_variable_set" id="30" inline="false">
+            <field name="VAR">global alist</field>
+            <value name="VALUE">
+              <block type="component_method" id="31" inline="false">
+                <mutation component_type="Web" method_name="JsonTextDecode" is_generic="false" instance_name="網路1"></mutation>
+                <field name="COMPONENT_SELECTOR">網路1</field>
+                <value name="ARG0">
+                  <block type="lexical_variable_get" id="32">
+                    <mutation>
+                      <eventparam name="responseContent"></eventparam>
+                    </mutation>
+                    <field name="VAR">responseContent</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="lexical_variable_set" id="#P9{=AH$O*9-4jU.f=!~">
+                <field name="VAR">global selectlist</field>
+                <value name="VALUE">
+                  <block type="lexical_variable_get" id="{zo4O_!BW(3~I_PcgME.">
+                    <field name="VAR">global alist</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="procedures_callnoreturn" id="?_qBuKsQ]OE#*9PD:),s" inline="false">
+                    <mutation name="stationlist">
+                      <arg name="listname"></arg>
+                    </mutation>
+                    <field name="PROCNAME">stationlist</field>
+                    <value name="ARG0">
+                      <block type="lexical_variable_get" id="3rzl3W5_,plX2,#^^2Tz">
+                        <field name="VAR">global selectlist</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="e#xMYZRiZ=bQ~btK%jgO" x="0" y="587">
+    <mutation>
+      <arg name="listname"></arg>
+    </mutation>
+    <field name="NAME">stationlist</field>
+    <field name="VAR0">listname</field>
+    <statement name="STACK">
+      <block type="component_set_get" id="26" inline="false">
+        <mutation component_type="ListPicker" set_or_get="set" property_name="Enabled" is_generic="false" instance_name="清單選擇器1"></mutation>
+        <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+        <field name="PROP">Enabled</field>
+        <value name="VALUE">
+          <block type="logic_false" id="27">
+            <field name="BOOL">TRUE</field>
+          </block>
+        </value>
+        <next>
+          <block type="component_set_get" id="28" inline="false">
+            <mutation component_type="ListPicker" set_or_get="set" property_name="Text" is_generic="false" instance_name="清單選擇器1"></mutation>
+            <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+            <field name="PROP">Text</field>
+            <value name="VALUE">
+              <block type="text" id="29">
+                <field name="TEXT">請選擇『國際環保新聞週報』</field>
+              </block>
+            </value>
+            <next>
+              <block type="component_set_get" id="gu~o{G%{Nl-DNPYY*y?$" inline="false">
+                <mutation component_type="ListPicker" set_or_get="set" property_name="FontSize" is_generic="false" instance_name="清單選擇器1"></mutation>
+                <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+                <field name="PROP">FontSize</field>
+                <value name="VALUE">
+                  <block type="math_number" id="5/JAAgZ^RU`jW_Iy5@7t">
+                    <field name="NUM">16</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="lexical_variable_set" id="33" inline="false">
+                    <field name="VAR">global listpickerstr</field>
+                    <value name="VALUE">
+                      <block type="text" id="34">
+                        <field name="TEXT"></field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="controls_forEach" id="#d#RSo/,D;LQe5RGuob(" inline="false">
+                        <field name="VAR">item</field>
+                        <value name="LIST">
+                          <block type="lexical_variable_get" id="1V6(`7(QnSSfvnTtfdpR">
+                            <field name="VAR">listname</field>
+                          </block>
+                        </value>
+                        <statement name="DO">
+                          <block type="lexical_variable_set" id="OoeX0!qa%Ob8%#%(PBx/" inline="false">
+                            <field name="VAR">global listpickerstr</field>
+                            <value name="VALUE">
+                              <block type="text_join" id="[H4e9{HSV/,vcv-(qj3B" inline="false">
+                                <mutation items="3"></mutation>
+                                <value name="ADD0">
+                                  <block type="lexical_variable_get" id="qw}lc{@Mzg+9n0$*cUIy">
+                                    <field name="VAR">global listpickerstr</field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="lists_lookup_in_pairs" id="R]d}gF38J:j4[b,1Nwqv">
+                                    <value name="LIST">
+                                      <block type="lexical_variable_get" id="8V?$W9#5)doA1GyD%EjN">
+                                        <field name="VAR">item</field>
+                                      </block>
+                                    </value>
+                                    <value name="KEY">
+                                      <block type="text" id="B5PI9bAhJKD-MrJG:|@T">
+                                        <field name="TEXT">NewsTitle</field>
+                                      </block>
+                                    </value>
+                                    <value name="NOTFOUND">
+                                      <block type="text" id="*A**TlpoH._.wZF/!V3/">
+                                        <field name="TEXT">not found</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <value name="ADD2">
+                                  <block type="text" id="e(*F8]Sz)b#*d%P!Rz}(">
+                                    <field name="TEXT">,</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="component_set_get" id="45" inline="false">
+                            <mutation component_type="ListPicker" set_or_get="set" property_name="ElementsFromString" is_generic="false" instance_name="清單選擇器1"></mutation>
+                            <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+                            <field name="PROP">ElementsFromString</field>
+                            <value name="VALUE">
+                              <block type="lexical_variable_get" id="46">
+                                <field name="VAR">global listpickerstr</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="component_event" id="LzI`ywf6tEi7p#D1^mOF" x="0" y="1003">
+    <mutation component_type="ListPicker" is_generic="false" instance_name="清單選擇器1" event_name="AfterPicking"></mutation>
+    <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+    <statement name="DO">
+      <block type="component_set_get" id="k{NDPDu+Q7{D$y#NjLEM" inline="false">
+        <mutation component_type="ListPicker" set_or_get="set" property_name="Text" is_generic="false" instance_name="清單選擇器1"></mutation>
+        <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+        <field name="PROP">Text</field>
+        <value name="VALUE">
+          <block type="component_set_get" id="_?VNCjMlQ*P`0knP^?X=">
+            <mutation component_type="ListPicker" set_or_get="get" property_name="Selection" is_generic="false" instance_name="清單選擇器1"></mutation>
+            <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+            <field name="PROP">Selection</field>
+          </block>
+        </value>
+        <next>
+          <block type="component_set_get" id="waMm)hddsC%HEUOP!DV*">
+            <mutation component_type="Image" set_or_get="set" property_name="Visible" is_generic="false" instance_name="圖像1"></mutation>
+            <field name="COMPONENT_SELECTOR">圖像1</field>
+            <field name="PROP">Visible</field>
+            <value name="VALUE">
+              <block type="logic_false" id="Oyc(J|U[b5yv2?JYlF7H">
+                <field name="BOOL">FALSE</field>
+              </block>
+            </value>
+            <next>
+              <block type="component_set_get" id="Cn:+|Y]@?lu_:[y|bf%J">
+                <mutation component_type="ListPicker" set_or_get="set" property_name="FontBold" is_generic="false" instance_name="清單選擇器1"></mutation>
+                <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+                <field name="PROP">FontBold</field>
+                <value name="VALUE">
+                  <block type="logic_boolean" id="g,6W_Z$P;H1$$Ml9rcr6">
+                    <field name="BOOL">TRUE</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="component_set_get" id="#[9/vcDod.Ka,]`pD^vd">
+                    <mutation component_type="ListPicker" set_or_get="set" property_name="FontSize" is_generic="false" instance_name="清單選擇器1"></mutation>
+                    <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+                    <field name="PROP">FontSize</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="(BkW!VjQu]?y}lx`2=I,">
+                        <field name="NUM">20</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="local_declaration_statement" id="]WZ]fRr!`+$vH|bR}rRp" inline="false">
+                        <mutation>
+                          <localname name="alistselect"></localname>
+                        </mutation>
+                        <field name="VAR0">alistselect</field>
+                        <value name="DECL0">
+                          <block type="lists_select_item" id="pTRI^`w0*AgmK[8C,h{z">
+                            <value name="LIST">
+                              <block type="lexical_variable_get" id="l*M7,6kBOT}M_[~4|z9C">
+                                <field name="VAR">global selectlist</field>
+                              </block>
+                            </value>
+                            <value name="NUM">
+                              <block type="component_set_get" id="$OA5RGy~Y;rC_q^PG[dM">
+                                <mutation component_type="ListPicker" set_or_get="get" property_name="SelectionIndex" is_generic="false" instance_name="清單選擇器1"></mutation>
+                                <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+                                <field name="PROP">SelectionIndex</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="STACK">
+                          <block type="component_set_get" id="=q2Y9CG-MSx#Pk^Vaka3" inline="false">
+                            <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false" instance_name="類別"></mutation>
+                            <field name="COMPONENT_SELECTOR">類別</field>
+                            <field name="PROP">Text</field>
+                            <value name="VALUE">
+                              <block type="text_join" id="=RIe]S#[8;o[|E%qk:U3" inline="false">
+                                <mutation items="1"></mutation>
+                                <value name="ADD0">
+                                  <block type="lists_lookup_in_pairs" id="0PFwX[I`u3#@pvFp^j:R">
+                                    <value name="LIST">
+                                      <block type="lexical_variable_get" id="UDJ^%:R]gHat(9X2UtS@">
+                                        <field name="VAR">alistselect</field>
+                                      </block>
+                                    </value>
+                                    <value name="KEY">
+                                      <block type="text" id="vgBYn{(`%yJ]!:1zEot7">
+                                        <field name="TEXT">NewsClass</field>
+                                      </block>
+                                    </value>
+                                    <value name="NOTFOUND">
+                                      <block type="text" id="m7YH)j]Uyk!ad,,#4TtX">
+                                        <field name="TEXT">not found</field>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="component_set_get" id="Q3rTPjM#AhNC5LnwNPx)" inline="false">
+                                <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false" instance_name="內容"></mutation>
+                                <field name="COMPONENT_SELECTOR">內容</field>
+                                <field name="PROP">Text</field>
+                                <value name="VALUE">
+                                  <block type="text_join" id="qiX^-fD!#[,M#YpA-8(:" inline="false">
+                                    <mutation items="2"></mutation>
+                                    <value name="ADD0">
+                                      <block type="text" id="U%e$K}l,,^q%yrDi?[-}">
+                                        <field name="TEXT">新聞內容\n</field>
+                                      </block>
+                                    </value>
+                                    <value name="ADD1">
+                                      <block type="lists_lookup_in_pairs" id="/%gl+U79QGesoR!UKK6A">
+                                        <value name="LIST">
+                                          <block type="lexical_variable_get" id="JIrqq/wGZd_Bmt@SnMvF">
+                                            <field name="VAR">alistselect</field>
+                                          </block>
+                                        </value>
+                                        <value name="KEY">
+                                          <block type="text" id="M+]`Jb(YaqWYcS3W_[2X">
+                                            <field name="TEXT">NewsContent</field>
+                                          </block>
+                                        </value>
+                                        <value name="NOTFOUND">
+                                          <block type="text" id="a!+.#(UR?`yHdaKllmn|">
+                                            <field name="TEXT">not found</field>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                  </block>
+                                </value>
+                                <next>
+                                  <block type="component_set_get" id="0JIPXSfV_l7,7EfZqqyA" inline="false">
+                                    <mutation component_type="Label" set_or_get="set" property_name="FontSize" is_generic="false" instance_name="內容"></mutation>
+                                    <field name="COMPONENT_SELECTOR">內容</field>
+                                    <field name="PROP">FontSize</field>
+                                    <value name="VALUE">
+                                      <block type="math_number" id="c@TEbmsbmZ#z}@TFass9">
+                                        <field name="NUM">15</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="component_set_get" id="T)F-2E@V5[^9-[IrpU]C" inline="false">
+                                        <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false" instance_name="國家"></mutation>
+                                        <field name="COMPONENT_SELECTOR">國家</field>
+                                        <field name="PROP">Text</field>
+                                        <value name="VALUE">
+                                          <block type="text_join" id="oEbwoKox}caq@+?N7..%" inline="false">
+                                            <mutation items="1"></mutation>
+                                            <value name="ADD0">
+                                              <block type="lists_lookup_in_pairs" id="aLjD0*7%EqAjEjp3Uxx#">
+                                                <value name="LIST">
+                                                  <block type="lexical_variable_get" id="xv{[pv!{}oRC^3PPpC^!">
+                                                    <field name="VAR">alistselect</field>
+                                                  </block>
+                                                </value>
+                                                <value name="KEY">
+                                                  <block type="text" id="nY1`]Z9qwPTkt4wGvxN~">
+                                                    <field name="TEXT">NewsCountry</field>
+                                                  </block>
+                                                </value>
+                                                <value name="NOTFOUND">
+                                                  <block type="text" id="o)gpOM_Y%w,2nRt;UEU0">
+                                                    <field name="TEXT">not found</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <next>
+                                          <block type="component_set_get" id="CFzjI)cb`bC%;L2-O*;^" inline="false">
+                                            <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false" instance_name="報社"></mutation>
+                                            <field name="COMPONENT_SELECTOR">報社</field>
+                                            <field name="PROP">Text</field>
+                                            <value name="VALUE">
+                                              <block type="text_join" id="f$u3g^gI9N:gG;*v)`V$" inline="false">
+                                                <mutation items="2"></mutation>
+                                                <value name="ADD0">
+                                                  <block type="lists_lookup_in_pairs" id="rd=6iF7Iw`Vc4zdaH}A#">
+                                                    <value name="LIST">
+                                                      <block type="lexical_variable_get" id="$b[D71|_VZ/n{wV(q*BU">
+                                                        <field name="VAR">alistselect</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="KEY">
+                                                      <block type="text" id="v6s#E117T+?`Yst^Q2Vg">
+                                                        <field name="TEXT">NewsSource</field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="NOTFOUND">
+                                                      <block type="text" id="o7=jUSe`%5{K2Hs$Y0}C">
+                                                        <field name="TEXT">not found</field>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                                <value name="ADD1">
+                                                  <block type="text" id="l7NG#WS(y^QCQlWcseJY">
+                                                    <field name="TEXT">  發布</field>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="component_set_get" id="sUk_woO]oCW9p,Qf7?r-" inline="false">
+                                                <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false" instance_name="日期"></mutation>
+                                                <field name="COMPONENT_SELECTOR">日期</field>
+                                                <field name="PROP">Text</field>
+                                                <value name="VALUE">
+                                                  <block type="text_join" id="``Ad^9PN8f(vMQZ(OHTB" inline="false">
+                                                    <mutation items="2"></mutation>
+                                                    <value name="ADD0">
+                                                      <block type="text" id="Ivo[08iZWq,?hoX,]UtN">
+                                                        <field name="TEXT">發布日期  </field>
+                                                      </block>
+                                                    </value>
+                                                    <value name="ADD1">
+                                                      <block type="lists_lookup_in_pairs" id="|%|SCJfT;DA(z:RXvIE^">
+                                                        <value name="LIST">
+                                                          <block type="lexical_variable_get" id="%!K#JixX;TqSu_*h4M0a">
+                                                            <field name="VAR">alistselect</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="KEY">
+                                                          <block type="text" id=";aPdgSM@2P|p9?z==6^@">
+                                                            <field name="TEXT">NewsDate</field>
+                                                          </block>
+                                                        </value>
+                                                        <value name="NOTFOUND">
+                                                          <block type="text" id="1eQH*3,t[)b]k_OI0jEU">
+                                                            <field name="TEXT">not found</field>
+                                                          </block>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="component_event" id="13" x="0" y="2059">
+    <mutation component_type="Form" is_generic="false" instance_name="Screen5" event_name="Initialize"></mutation>
+    <field name="COMPONENT_SELECTOR">Screen5</field>
+    <statement name="DO">
+      <block type="component_set_get" id="16" inline="false">
+        <mutation component_type="ListPicker" set_or_get="set" property_name="Enabled" is_generic="false" instance_name="清單選擇器1"></mutation>
+        <field name="COMPONENT_SELECTOR">清單選擇器1</field>
+        <field name="PROP">Enabled</field>
+        <value name="VALUE">
+          <block type="logic_false" id="17">
+            <field name="BOOL">FALSE</field>
+          </block>
+        </value>
+        <next>
+          <block type="component_set_get" id="18" inline="false">
+            <mutation component_type="Web" set_or_get="set" property_name="Url" is_generic="false" instance_name="網路1"></mutation>
+            <field name="COMPONENT_SELECTOR">網路1</field>
+            <field name="PROP">Url</field>
+            <value name="VALUE">
+              <block type="lexical_variable_get" id="19">
+                <field name="VAR">global weburl</field>
+              </block>
+            </value>
+            <next>
+              <block type="component_method" id="20">
+                <mutation component_type="Web" method_name="Get" is_generic="false" instance_name="網路1"></mutation>
+                <field name="COMPONENT_SELECTOR">網路1</field>
+                <next>
+                  <block type="component_method" id=":D}{T$kW;:^1/`pR-bJY">
+                    <mutation component_type="Sidebar" method_name="Start" is_generic="false" instance_name="Sidebar1"></mutation>
+                    <field name="COMPONENT_SELECTOR">Sidebar1</field>
+                    <value name="ARG0">
+                      <block type="lists_from_csv_row" id="!n3i/E*IxRVG*W6l5J8S">
+                        <value name="TEXT">
+                          <block type="text" id="H~eo=CNy^8qV|MO47/AQ">
+                            <field name="TEXT">台灣即時空氣品質查詢,紫外線及時監測,沙塵及空氣品質預報,國內環保新聞</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="ARG1">
+                      <block type="lists_from_csv_row" id="n_CayK4bJAw,njLi/wUe">
+                        <value name="TEXT">
+                          <block type="text" id="-E:L8){4H0`c.:G%9M{b">
+                            <field name="TEXT">keyboard_arrow_right,keyboard_arrow_right,keyboard_arrow_right,keyboard_arrow_right</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="ARG2">
+                      <block type="text" id="}lWFq3WX{8=91D2qyWDT">
+                        <field name="TEXT">66.jpg</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="QVqI;r^R{uLs}(Yf[i]z" x="0" y="2383">
+    <mutation>
+      <arg name="x"></arg>
+    </mutation>
+    <field name="NAME">procedure</field>
+    <field name="VAR0">x</field>
+    <statement name="STACK">
+      <block type="controls_if" id="g.{bw[0oXVzJmy~3L@?c">
+        <value name="IF0">
+          <block type="logic_compare" id="*SAZxd/UxFL[G=5t0WHV">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="lexical_variable_get" id="%--?AM,^-*k_PR9jOn*-">
+                <field name="VAR">x</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="text" id="=GuSJKnXn*xxrY}RFG8I">
+                <field name="TEXT">台灣即時空氣品質查詢</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="controls_openAnotherScreen" id=":KC]1h{~4JKH]I}S?6[V">
+            <value name="SCREEN">
+              <block type="text" id="YEH`]*!fSo(4Hf7^dB*N">
+                <field name="TEXT">Screen1</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="controls_if" id="8dY]bcb5WWR2)a_bqG,Y">
+            <value name="IF0">
+              <block type="logic_compare" id="J(Q]1B=6w$o.Sia?!E@0">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <block type="lexical_variable_get" id="]{2ovvE(.G~b|gg9q5`-">
+                    <field name="VAR">x</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="text" id="wDhk%.Ni%J:xq3cY?SmJ">
+                    <field name="TEXT">國內環保新聞</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="controls_openAnotherScreen" id="ek#skU1:`]tv%Ph1}KHz">
+                <value name="SCREEN">
+                  <block type="text" id="Jq%3Xc,`IB,KHGo-0//m">
+                    <field name="TEXT">Screen4</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+            <next>
+              <block type="controls_if" id="92,`9.=8::T@$hlHtdQp">
+                <value name="IF0">
+                  <block type="logic_compare" id="%cQ6UuL*abKf/l555X=U">
+                    <field name="OP">EQ</field>
+                    <value name="A">
+                      <block type="lexical_variable_get" id="9-B2CsdD+F+)Ar6?/w_z">
+                        <field name="VAR">x</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="text" id="3`V%wq!e.$G%++JVI~xi">
+                        <field name="TEXT">紫外線及時監測</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="controls_openAnotherScreen" id="3)+@~RxAE:V[1HEW,b!g">
+                    <value name="SCREEN">
+                      <block type="text" id="kEb5e`GD2whxW7wMD}=f">
+                        <field name="TEXT">Screen3</field>
+                      </block>
+                    </value>
+                  </block>
+                </statement>
+                <next>
+                  <block type="controls_if" id="1n.;*S%4Ys18C/U_yP~d">
+                    <value name="IF0">
+                      <block type="logic_compare" id="AwG4[HNq[DFlM%Z[X7~~">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="lexical_variable_get" id="9HYJ/v!q]}=POmToA5K!">
+                            <field name="VAR">x</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="text" id="*rE}k[HN}qAzB6%I?V8!">
+                            <field name="TEXT">沙塵及空氣品質預報</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <statement name="DO0">
+                      <block type="controls_openAnotherScreen" id="J+K.dseW=l]]Nmh!vr6@">
+                        <value name="SCREEN">
+                          <block type="text" id="j6/X6t,:4.vIHl[$Y*^=">
+                            <field name="TEXT">Screen6</field>
+                          </block>
+                        </value>
+                      </block>
+                    </statement>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="component_event" id="kVcVi,7eTCP7ex,{hNW0" x="0" y="2745">
+    <mutation component_type="Sidebar" is_generic="false" instance_name="Sidebar1" event_name="AfterSelecting"></mutation>
+    <field name="COMPONENT_SELECTOR">Sidebar1</field>
+    <statement name="DO">
+      <block type="component_method" id="CECVFZ7yB?OgD5K-MlaW">
+        <mutation component_type="Sidebar" method_name="Hide" is_generic="false" instance_name="Sidebar1"></mutation>
+        <field name="COMPONENT_SELECTOR">Sidebar1</field>
+        <next>
+          <block type="procedures_callnoreturn" id="aE|aUmI|-bRf$QF}OET*" inline="false">
+            <mutation name="procedure">
+              <arg name="x"></arg>
+            </mutation>
+            <field name="PROCNAME">procedure</field>
+            <value name="ARG0">
+              <block type="lexical_variable_get" id="!u7NdAA$k#cwM;W]:z?A">
+                <mutation>
+                  <eventparam name="itemValue"></eventparam>
+                </mutation>
+                <field name="VAR">itemValue</field>
+              </block>
+            </value>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="component_event" id="8JFkTq#:2LBhpB-fM!d5" x="372" y="2798">
+    <mutation component_type="Form" is_generic="false" instance_name="Screen5" event_name="BackPressed"></mutation>
+    <field name="COMPONENT_SELECTOR">Screen5</field>
+    <statement name="DO">
+      <block type="component_method" id="#q~m4lOYbbQ,=vOw@8hP">
+        <mutation component_type="Notifier" method_name="ShowChooseDialog" is_generic="false" instance_name="對話框1"></mutation>
+        <field name="COMPONENT_SELECTOR">對話框1</field>
+        <value name="ARG0">
+          <block type="text" id="Ncr-J)7mUq_^i7.v5YwP">
+            <field name="TEXT">確定是否要關閉此程式</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="text" id="q-.@mfCPkmly35))pFN%">
+            <field name="TEXT">結束</field>
+          </block>
+        </value>
+        <value name="ARG2">
+          <block type="text" id="d?BkS9=(AbRg6oRlIV$_">
+            <field name="TEXT">確定</field>
+          </block>
+        </value>
+        <value name="ARG3">
+          <block type="text" id="j-_Nrk!(x2A#1ieyv.E2">
+            <field name="TEXT">取消</field>
+          </block>
+        </value>
+        <value name="ARG4">
+          <block type="logic_boolean" id="+}xQwgp3Nk7CI6.X!$Uq">
+            <field name="BOOL">FALSE</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+  <block type="component_event" id="!_t=Z(#1|NL]QZb[Ysr=" x="0" y="2913">
+    <mutation component_type="Button" is_generic="false" instance_name="按鈕2" event_name="Click"></mutation>
+    <field name="COMPONENT_SELECTOR">按鈕2</field>
+    <statement name="DO">
+      <block type="component_method" id="rNO(=:WIlf4.o^mmp@Dr">
+        <mutation component_type="Sidebar" method_name="Show" is_generic="false" instance_name="Sidebar1"></mutation>
+        <field name="COMPONENT_SELECTOR">Sidebar1</field>
+      </block>
+    </statement>
+  </block>
+  <block type="component_event" id="U|jL+,Puf%CE?=uE7N2}" x="367" y="3019">
+    <mutation component_type="Notifier" is_generic="false" instance_name="對話框1" event_name="AfterChoosing"></mutation>
+    <field name="COMPONENT_SELECTOR">對話框1</field>
+    <statement name="DO">
+      <block type="controls_if" id="gL3TA65x|d5;JL%-Eip8">
+        <value name="IF0">
+          <block type="math_compare" id="#~YQ3=e:hf[oWj3t}]Q5">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="lexical_variable_get" id="DTsq3kOBi(:u`/XF?5S-">
+                <mutation>
+                  <eventparam name="choice"></eventparam>
+                </mutation>
+                <field name="VAR">choice</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="text" id="jELgPbEI=g;jB[}bDSMK">
+                <field name="TEXT">確定</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="controls_closeApplication" id="UsmE~nLepy?Ed}x0VOw8"></block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+  <yacodeblocks ya-version="196" language-version="27"></yacodeblocks>
+</xml>
